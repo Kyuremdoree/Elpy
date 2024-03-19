@@ -7,12 +7,15 @@ public class Note implements Serializable {
     private String title;
     private String content;
     private String date;
+    private int color;
     private boolean isPinned;
 
-    public Note(String title, String content, String date, boolean isPinned) {
+    public Note(int id, String title, String content, String date, int color, boolean isPinned) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
+        this.color = color;
         this.isPinned = isPinned;
     }
 
@@ -32,6 +35,10 @@ public class Note implements Serializable {
         return date;
     }
 
+    public int getColor() {
+        return color;
+    }
+
     public boolean isPinned() {
         return isPinned;
     }
@@ -42,6 +49,10 @@ public class Note implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public void setPinned(boolean pinned) {
