@@ -1,5 +1,7 @@
 package uqac.dim.elpy;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,15 +21,19 @@ import uqac.dim.elpy.models.Note;
 import uqac.dim.elpy.models.NotesListAdapter;
 
 public class NoteSystem extends AppCompatActivity {
-    RecyclerView home_container;
-    NotesListAdapter notesListAdapter;
-    List<Note> notes = new ArrayList<>();
+    private RecyclerView home_container;
+    private NotesListAdapter notesListAdapter;
+    private List<Note> notes = new ArrayList<>();
 
-    FloatingActionButton add_note_btn;
+    private FloatingActionButton add_note_btn;
+    private static final int ADD_NOTE_REQUEST_CODE = 101;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_note_system);
 
         home_container = findViewById(R.id.home_container);
         add_note_btn = findViewById(R.id.add_note_btn);
@@ -35,8 +41,18 @@ public class NoteSystem extends AppCompatActivity {
         updateRecycler();
 
         add_note_btn.setOnClickListener(v -> {
-            
+            Intent intent = new Intent(NoteSystem.this, NoteTaker.class);
+            startActivityForResult(intent, ADD_NOTE_REQUEST_CODE);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_NOTE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }
     }
 
     private void updateRecycler() {

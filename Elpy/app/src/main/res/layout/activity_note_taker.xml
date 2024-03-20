@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".NoteTaker">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_notes"
+        app:title="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/save_note"
+                android:src="@drawable/note_save"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <EditText
+        android:id="@+id/noteTaker_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:singleLine="true"/>
+    <EditText
+        android:id="@+id/noteTaker_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Écrivez le contenu de la note."/>
+</LinearLayout>
