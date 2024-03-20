@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".NoteTaker">
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_notes"
+        android:id="@+id/noteTaker_toolbar"
         app:title="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/save_note"
+                android:id="@+id/noteTaker_save"
                 android:src="@drawable/note_save"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"

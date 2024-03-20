@@ -17,7 +17,7 @@ import uqac.dim.elpy.models.Note;
 public class NoteTaker extends AppCompatActivity {
     private EditText noteTaker_title;
     private EditText noteTaker_content;
-    private ImageView save_note;
+    private ImageView noteTaker_save;
     private Note note;
     boolean isOldNote;
 
@@ -28,9 +28,16 @@ public class NoteTaker extends AppCompatActivity {
 
         noteTaker_title = findViewById(R.id.noteTaker_title);
         noteTaker_content = findViewById(R.id.noteTaker_content);
-        save_note = findViewById(R.id.save_note);
+        noteTaker_save = findViewById(R.id.noteTaker_save);
 
-        save_note.setOnClickListener(v -> {
+        note = (Note) getIntent().getSerializableExtra("old_note");
+        if (note != null) {
+            noteTaker_title.setText(note.getTitle());
+            noteTaker_content.setText(note.getContent());
+            isOldNote = true;
+        }
+
+        noteTaker_save.setOnClickListener(v -> {
             String title = String.valueOf(noteTaker_title.getText());
             String content = String.valueOf(noteTaker_content.getText());
 
@@ -53,12 +60,5 @@ public class NoteTaker extends AppCompatActivity {
                 finish();
             }
         });
-
-        note = (Note) getIntent().getSerializableExtra("old_note");
-        if (note != null) {
-            noteTaker_title.setText(note.getTitle());
-            noteTaker_content.setText(note.getContent());
-            isOldNote = true;
-        }
     }
 }
