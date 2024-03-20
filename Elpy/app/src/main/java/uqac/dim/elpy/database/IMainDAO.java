@@ -16,8 +16,8 @@ public interface IMainDAO {
     void insertNote(Note note);
     @Query("SELECT * FROM NOTE ORDER BY id DESC")
     List<Note> getAllNotes();
-    @Query("UPDATE NOTE SET Title = :title, Content = :content WHERE id = :id")
-    void updateNote(int id, String title, String content);
+    @Query("UPDATE NOTE SET Title = :title, Content = :content, Color = :color WHERE id = :id")
+    void updateNote(int id, String title, String content, int color);
     @Query("UPDATE NOTE SET Color = :color WHERE id = :id")
     void updateNoteColor(int id, int color);
     @Query("UPDATE NOTE SET IsPinned = :isPinned WHERE id = :id")

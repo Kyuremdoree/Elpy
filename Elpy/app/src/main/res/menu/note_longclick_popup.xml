@@ -3,8 +3,6 @@
     <item
         android:id="@+id/note_pin"
         android:title="Épingler/Désépingler"/>
-    <item android:id="@+id/note_change_color"
-        android:title="Couleur"/>
     <item android:id="@+id/note_delete"
         android:title="Supprimer"/>
 </menu>

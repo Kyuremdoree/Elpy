@@ -85,8 +85,7 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
                 database.mainDAO().insertNote(note);
             }
             else if (requestCode == EDIT_NOTE_REQUEST_CODE) {
-                database.mainDAO().updateNote(note.getId(), note.getTitle(), note.getContent());
-
+                database.mainDAO().updateNote(note.getId(), note.getTitle(), note.getContent(), note.getColor());
             }
             refreshNotes();
         }
@@ -149,13 +148,6 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
             refreshNotes();
             return true;
         }
-        else if (item.getItemId() == R.id.note_change_color) {
-            openColorPicker();
-            Toast.makeText(NoteSystem.this,
-                    "OUI",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
         else if (item.getItemId() == R.id.note_delete) {
             database.mainDAO().deleteNote(selectedNote);
             notes.remove(selectedNote);
@@ -166,26 +158,5 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
             return true;
         }
         return false;
-    }
-
-    private void openColorPicker() {
-        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, selectedNote.getColor(), new AmbilWarnaDialog.OnAmbilWarnaListener() {
-            @Override
-            public void onCancel(AmbilWarnaDialog dialog) {
-                Toast.makeText(NoteSystem.this,
-                        "Ancienne couleur restaurée",
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onOk(AmbilWarnaDialog dialog, int color) {
-                database.mainDAO().updateNoteColor(selectedNote.getId(), color);
-                Toast.makeText(NoteSystem.this,
-                        "Nouvelle couleur appliquée",
-                        Toast.LENGTH_SHORT).show();
-                refreshNotes();
-            }
-        });
-        ambilWarnaDialog.show();
     }
 }
