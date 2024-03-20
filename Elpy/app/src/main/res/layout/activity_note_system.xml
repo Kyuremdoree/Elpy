@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
-        android:background="@color/grey"
+        android:background="@color/silver"
         app:queryHint="Chercher une note..." />
 
     <androidx.recyclerview.widget.RecyclerView

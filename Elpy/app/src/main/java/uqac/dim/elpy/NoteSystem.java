@@ -23,6 +23,7 @@ import java.util.List;
 import uqac.dim.elpy.database.RoomDB;
 import uqac.dim.elpy.models.Note;
 import uqac.dim.elpy.models.NotesListAdapter;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private static final int ADD_NOTE_REQUEST_CODE = 101;
@@ -142,21 +143,49 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
         if (item.getItemId() == R.id.note_pin) {
             database.mainDAO().toggleNotePin(selectedNote.getId(), !selectedNote.isPinned());
             Toast.makeText(NoteSystem.this,
-                    selectedNote.isPinned() ? "Note désépinglée !" : "Note épinglée !",
+                    selectedNote.isPinned() ? "Note désépinglée" : "Note épinglée",
                     Toast.LENGTH_SHORT).show();
 
             refreshNotes();
             return true;
+        }
+        else if (item.getItemId() == R.id.note_change_color) {
+            openColorPicker();
+            Toast.makeText(NoteSystem.this,
+                    "OUI",
+                    Toast.LENGTH_SHORT).show();
+            return false;
         }
         else if (item.getItemId() == R.id.note_delete) {
             database.mainDAO().deleteNote(selectedNote);
             notes.remove(selectedNote);
             notesListAdapter.notifyDataSetChanged();
             Toast.makeText(NoteSystem.this,
-                    "Note supprimée !",
+                    "Note supprimée",
                     Toast.LENGTH_SHORT).show();
             return true;
         }
         return false;
+    }
+
+    private void openColorPicker() {
+        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, selectedNote.getColor(), new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+                Toast.makeText(NoteSystem.this,
+                        "Ancienne couleur restaurée",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                database.mainDAO().updateNoteColor(selectedNote.getId(), color);
+                Toast.makeText(NoteSystem.this,
+                        "Nouvelle couleur appliquée",
+                        Toast.LENGTH_SHORT).show();
+                refreshNotes();
+            }
+        });
+        ambilWarnaDialog.show();
     }
 }

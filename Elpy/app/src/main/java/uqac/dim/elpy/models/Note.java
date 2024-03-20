@@ -25,7 +25,7 @@ public class Note implements Serializable {
 
     public Note(String date) {
         this.date = date;
-        this.color = R.color.orange;
+        this.color = R.color.silver;
         this.isPinned = false;
     }
 

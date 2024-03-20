@@ -18,6 +18,8 @@ public interface IMainDAO {
     List<Note> getAllNotes();
     @Query("UPDATE NOTE SET Title = :title, Content = :content WHERE id = :id")
     void updateNote(int id, String title, String content);
+    @Query("UPDATE NOTE SET Color = :color WHERE id = :id")
+    void updateNoteColor(int id, int color);
     @Query("UPDATE NOTE SET IsPinned = :isPinned WHERE id = :id")
     void toggleNotePin(int id, boolean isPinned);
     @Delete

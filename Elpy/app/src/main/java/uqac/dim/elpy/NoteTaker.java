@@ -41,8 +41,10 @@ public class NoteTaker extends AppCompatActivity {
             String title = String.valueOf(noteTaker_title.getText());
             String content = String.valueOf(noteTaker_content.getText());
 
-            if (content.isEmpty()) {
-                Toast.makeText(NoteTaker.this, "Vous devez écrire un contenu pour cette note", Toast.LENGTH_SHORT).show();
+            if (title.isEmpty() || content.isEmpty()) {
+                Toast.makeText(NoteTaker.this,
+                        title.isEmpty() ? "Titre obligatoire" : "Contenu obligatoire",
+                        Toast.LENGTH_SHORT).show();
             }
             else {
                 SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm a");

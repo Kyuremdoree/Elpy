@@ -35,6 +35,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("androidx.room:room-common:2.6.1")
+    implementation ("com.github.yukuku:ambilwarna:2.0.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-runtime:2.6.1")
     testImplementation("junit:junit:4.13.2")
