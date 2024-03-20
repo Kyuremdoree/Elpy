@@ -1,22 +1,34 @@
 package uqac.dim.elpy.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+import uqac.dim.elpy.R;
+
+@Entity(tableName = "NOTE")
 public class Note implements Serializable {
-    private int id;
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0;
+    @ColumnInfo(name = "Title")
     private String title;
+    @ColumnInfo(name = "Content")
     private String content;
+    @ColumnInfo(name = "Date")
     private String date;
+    @ColumnInfo(name = "Color")
     private int color;
+    @ColumnInfo(name = "IsPinned")
     private boolean isPinned;
 
-    public Note(int id, String title, String content, String date, int color, boolean isPinned) {
-        this.id = id;
+    public Note(String title, String content, String date) {
         this.title = title;
         this.content = content;
         this.date = date;
-        this.color = color;
-        this.isPinned = isPinned;
+        this.color = R.color.orange;
+        this.isPinned = false;
     }
 
     public int getId() {
@@ -41,6 +53,10 @@ public class Note implements Serializable {
 
     public boolean isPinned() {
         return isPinned;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {

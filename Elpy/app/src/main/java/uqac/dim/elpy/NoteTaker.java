@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -40,7 +39,7 @@ public class NoteTaker extends AppCompatActivity {
             else {
                 SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm a");
                 Date date = new Date();
-                note = new Note(0, title, content, formatter.format(date), R.color.orange, false);
+                note = new Note(title, content, formatter.format(date));
 
                 Intent intent = new Intent();
                 intent.putExtra("note", note);

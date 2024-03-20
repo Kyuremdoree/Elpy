@@ -3,7 +3,6 @@ package uqac.dim.elpy;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -17,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import uqac.dim.elpy.database.RoomDB;
 import uqac.dim.elpy.models.Note;
 import uqac.dim.elpy.models.NotesListAdapter;
 
@@ -28,10 +28,14 @@ public class NoteSystem extends AppCompatActivity {
     private FloatingActionButton add_note_btn;
     private static final int ADD_NOTE_REQUEST_CODE = 101;
 
+    private RoomDB database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = RoomDB.getInstance(this);
+        notes = database.mainDAO().getAllNotes();
 
         setContentView(R.layout.activity_note_system);
 
@@ -51,7 +55,12 @@ public class NoteSystem extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_NOTE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-
+            assert data != null;
+            Note note = (Note) data.getSerializableExtra("note");
+            database.mainDAO().insertNote(note);
+            notes.clear();
+            notes.addAll(database.mainDAO().getAllNotes());
+            notesListAdapter.notifyDataSetChanged();
         }
     }
 
