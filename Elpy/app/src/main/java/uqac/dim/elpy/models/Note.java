@@ -23,9 +23,7 @@ public class Note implements Serializable {
     @ColumnInfo(name = "IsPinned")
     private boolean isPinned;
 
-    public Note(String title, String content, String date) {
-        this.title = title;
-        this.content = content;
+    public Note(String date) {
         this.date = date;
         this.color = R.color.orange;
         this.isPinned = false;
@@ -35,40 +33,44 @@ public class Note implements Serializable {
         return id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public boolean isPinned() {
-        return isPinned;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public boolean isPinned() {
+        return isPinned;
     }
 
     public void setPinned(boolean pinned) {

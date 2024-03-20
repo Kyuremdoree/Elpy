@@ -19,6 +19,7 @@ public class NoteTaker extends AppCompatActivity {
     private EditText noteTaker_content;
     private ImageView save_note;
     private Note note;
+    boolean isOldNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,12 @@ public class NoteTaker extends AppCompatActivity {
             else {
                 SimpleDateFormat formatter = new SimpleDateFormat("EEE, d MMM yyyy HH:mm a");
                 Date date = new Date();
-                note = new Note(title, content, formatter.format(date));
+
+                if (!isOldNote) {
+                    note = new Note(formatter.format(date));
+                }
+                note.setTitle(title);
+                note.setContent(content);
 
                 Intent intent = new Intent();
                 intent.putExtra("note", note);
@@ -47,5 +53,12 @@ public class NoteTaker extends AppCompatActivity {
                 finish();
             }
         });
+
+        note = (Note) getIntent().getSerializableExtra("old_note");
+        if (note != null) {
+            noteTaker_title.setText(note.getTitle());
+            noteTaker_content.setText(note.getContent());
+            isOldNote = true;
+        }
     }
 }

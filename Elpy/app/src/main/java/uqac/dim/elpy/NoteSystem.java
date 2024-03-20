@@ -27,6 +27,7 @@ public class NoteSystem extends AppCompatActivity {
 
     private FloatingActionButton add_note_btn;
     private static final int ADD_NOTE_REQUEST_CODE = 101;
+    private static final int EDIT_NOTE_REQUEST_CODE = 102;
 
     private RoomDB database;
 
@@ -54,10 +55,16 @@ public class NoteSystem extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_NOTE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             assert data != null;
             Note note = (Note) data.getSerializableExtra("note");
-            database.mainDAO().insertNote(note);
+            if (requestCode == ADD_NOTE_REQUEST_CODE) {
+                database.mainDAO().insertNote(note);
+            }
+            else if (requestCode == EDIT_NOTE_REQUEST_CODE) {
+                database.mainDAO().updateNote(note.getId(), note.getTitle(), note.getContent());
+
+            }
             notes.clear();
             notes.addAll(database.mainDAO().getAllNotes());
             notesListAdapter.notifyDataSetChanged();
@@ -74,7 +81,9 @@ public class NoteSystem extends AppCompatActivity {
     private final INoteClickListener noteClickListener = new INoteClickListener() {
         @Override
         public void onClick(Note note) {
-
+            Intent intent = new Intent(NoteSystem.this, NoteTaker.class);
+            intent.putExtra("old_note", note);
+            startActivityForResult(intent, EDIT_NOTE_REQUEST_CODE);
         }
 
         @Override
