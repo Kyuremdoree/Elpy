@@ -7,6 +7,7 @@
     <string name="convertisseur_audio">Convertisseur Audio</string>
     <string name="menu_open">Ouvert</string>
     <string name="menu_close">Fermer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_marker">+</string>
+    <string name="text_description">Descritpion :</string>
+    <string name="text_nom">Nom :</string>
 </resources>
