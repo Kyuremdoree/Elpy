@@ -9,4 +9,6 @@
     <string name="menu_close">Fermer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="putURL">Entrez l\'URL</string>
+    <string name="convert">Convertir</string>
 </resources>
