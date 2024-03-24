@@ -7,11 +7,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,8 +39,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        // il faudra faire l'imbrication des if pour redirigé sur la page cliqué
-        return false;
+
+        if (itemId == R.id.fConvertisseur) {
+            //start convertisseur
+        }
+        else if (itemId == R.id.fPriseNote) {
+            Intent intent = new Intent(this, NoteSystem.class);
+            startActivityForResult(intent, 555);
+        }
+        else if (itemId == R.id.fPingMap) {
+            //start ping map
+        }
+        else if (itemId == R.id.fChrono) {
+            //start chrono
+        }
+        else if (itemId == R.id.fAudioConvertisseur) {
+            //start audio convertisseur
+        }
+        return true;
     }
     @Override
     public void onBackPressed() {

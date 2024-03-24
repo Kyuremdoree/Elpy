@@ -18,4 +18,6 @@
     <string name="note_deleted">Note supprimée</string>
     <string name="title_required">Titre obligatoire</string>
     <string name="content_required">Contenu obligatoire</string>
+    <string name="date">Date</string>
+    <string name="notes">Notes.</string>
 </resources>

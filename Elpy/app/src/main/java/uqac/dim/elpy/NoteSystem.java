@@ -38,8 +38,6 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
     private FloatingActionButton note_add;
     private SearchView note_home_search;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
