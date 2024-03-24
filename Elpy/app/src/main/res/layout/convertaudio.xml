@@ -14,6 +14,7 @@
 
 
     <EditText
+        android:id="@+id/urlToConvert"
         android:layout_width="350sp"
         android:layout_height="48sp"
         android:layout_margin="20sp"
@@ -21,6 +22,7 @@
         android:hint="@string/putURL"/>
 
     <Button
+        android:id="@+id/convertButton"
         android:layout_width="260sp"
         android:layout_height="55sp"
         android:layout_margin="20sp"

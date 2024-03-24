@@ -40,7 +40,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        // il faudra faire l'imbrication des if pour redirigé sur la page cliqué
+        // il faudra faire l'imbrication des if pour rediriger sur la page cliquée
+        if (itemId == R.id.fAudioConvertisseur)
+        {
+            //TODO
+            return false;
+        }
+
         return false;
     }
     @Override
