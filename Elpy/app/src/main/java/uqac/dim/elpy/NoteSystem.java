@@ -142,7 +142,7 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
         if (item.getItemId() == R.id.note_pin) {
             database.mainDAO().toggleNotePin(selectedNote.getId(), !selectedNote.isPinned());
             Toast.makeText(NoteSystem.this,
-                    selectedNote.isPinned() ? "Note désépinglée" : "Note épinglée",
+                    selectedNote.isPinned() ? String.valueOf(R.string.note_unpinned) : String.valueOf(R.string.note_pinned),
                     Toast.LENGTH_SHORT).show();
 
             refreshNotes();
@@ -153,7 +153,7 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
             notes.remove(selectedNote);
             notesListAdapter.notifyDataSetChanged();
             Toast.makeText(NoteSystem.this,
-                    "Note supprimée",
+                    String.valueOf(R.string.note_deleted),
                     Toast.LENGTH_SHORT).show();
             return true;
         }

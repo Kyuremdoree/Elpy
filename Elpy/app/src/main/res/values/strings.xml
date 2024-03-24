@@ -9,4 +9,13 @@
     <string name="menu_close">Fermer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pin_unpin">Épingler/Désépingler</string>
+    <string name="delete">Supprimer</string>
+    <string name="title">Titre</string>
+    <string name="note_default_content">Écrivez le contenu de la note.</string>
+    <string name="note_pinned">Note épinglée</string>
+    <string name="note_unpinned">Note désépinglée</string>
+    <string name="note_deleted">Note supprimée</string>
+    <string name="title_required">Titre obligatoire</string>
+    <string name="content_required">Contenu obligatoire</string>
 </resources>

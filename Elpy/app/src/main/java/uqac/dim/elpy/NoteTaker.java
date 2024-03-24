@@ -65,7 +65,7 @@ public class NoteTaker extends AppCompatActivity {
 
             if (title.isEmpty() || content.isEmpty()) {
                 Toast.makeText(NoteTaker.this,
-                        title.isEmpty() ? "Titre obligatoire" : "Contenu obligatoire",
+                        title.isEmpty() ? String.valueOf(R.string.title_required) : String.valueOf(R.string.content_required),
                         Toast.LENGTH_SHORT).show();
             }
             else {

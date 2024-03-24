@@ -34,7 +34,7 @@
         android:id="@+id/noteTaker_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Titre"
+        android:text="@string/title"
         android:textStyle="bold"
         android:textSize="20sp"
         android:singleLine="true"/>
@@ -42,5 +42,5 @@
         android:id="@+id/noteTaker_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Écrivez le contenu de la note."/>
+        android:hint="@string/note_default_content"/>
 </LinearLayout>
