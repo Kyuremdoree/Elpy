@@ -85,6 +85,7 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
             else if (requestCode == EDIT_NOTE_REQUEST_CODE) {
                 database.mainDAO().updateNote(note.getId(), note.getTitle(), note.getContent(), note.getColor());
             }
+            resetFilter();
             refreshNotes();
         }
     }
@@ -152,8 +153,8 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
                     selectedNote.isPinned() ? getString(R.string.note_unpinned) : getString(R.string.note_pinned),
                     Toast.LENGTH_SHORT).show();
 
-            refreshNotes();
             resetFilter();
+            refreshNotes();
             return true;
         }
         else if (item.getItemId() == R.id.note_delete) {
