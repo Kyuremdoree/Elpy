@@ -18,12 +18,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import uqac.dim.elpy.database.RoomDB;
 import uqac.dim.elpy.models.Note;
 import uqac.dim.elpy.models.NotesListAdapter;
-import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private static final int ADD_NOTE_REQUEST_CODE = 101;
@@ -42,7 +42,6 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         database = RoomDB.getInstance(this);
-        notes = database.mainDAO().getAllNotes();
 
         setContentView(R.layout.activity_note_system);
 
@@ -60,7 +59,6 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
         note_home_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
@@ -70,6 +68,8 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
                 return true;
             }
         });
+
+        refreshNotes();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
                 filteredList.add(note);
             }
         }
-        notesListAdapter.filterList(filteredList);
+        notesListAdapter.setList(filteredList);
     }
 
     private void updateRecycler() {
@@ -132,6 +132,15 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
     private void refreshNotes() {
         notes.clear();
         notes.addAll(database.mainDAO().getAllNotes());
+        notes.sort((o1, o2) -> {
+            if (o1.isPinned() && !o2.isPinned()) {
+                return -1; // o1 est épinglée, o2 n'est pas épinglée, donc o1 doit venir en premier
+            } else if (!o1.isPinned() && o2.isPinned()) {
+                return 1; // o2 est épinglée, o1 n'est pas épinglée, donc o2 doit venir en premier
+            } else {
+                return 0; // Les deux notes sont épinglées ou non épinglées, l'ordre ne change pas
+            }
+        });
         notesListAdapter.notifyDataSetChanged();
     }
 
@@ -140,10 +149,11 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
         if (item.getItemId() == R.id.note_pin) {
             database.mainDAO().toggleNotePin(selectedNote.getId(), !selectedNote.isPinned());
             Toast.makeText(NoteSystem.this,
-                    selectedNote.isPinned() ? String.valueOf(R.string.note_unpinned) : String.valueOf(R.string.note_pinned),
+                    selectedNote.isPinned() ? getString(R.string.note_unpinned) : getString(R.string.note_pinned),
                     Toast.LENGTH_SHORT).show();
 
             refreshNotes();
+            resetFilter();
             return true;
         }
         else if (item.getItemId() == R.id.note_delete) {
@@ -151,10 +161,16 @@ public class NoteSystem extends AppCompatActivity implements PopupMenu.OnMenuIte
             notes.remove(selectedNote);
             notesListAdapter.notifyDataSetChanged();
             Toast.makeText(NoteSystem.this,
-                    String.valueOf(R.string.note_deleted),
+                    getString(R.string.note_deleted),
                     Toast.LENGTH_SHORT).show();
+            resetFilter();
             return true;
         }
         return false;
+    }
+
+    private void resetFilter() {
+        note_home_search.setQuery(null, false);
+        notesListAdapter.setList(notes);
     }
 }
