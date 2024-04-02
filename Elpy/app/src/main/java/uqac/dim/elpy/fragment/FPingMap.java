@@ -1,24 +1,32 @@
-package uqac.dim.elpy;
+package uqac.dim.elpy.fragment;
+
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.health.connect.datatypes.ExerciseRoute;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -33,68 +41,65 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
+import uqac.dim.elpy.PingMapActivity;
 import uqac.dim.elpy.utilitaire.MarkerInfo;
 
-public class PingMapActivity extends FragmentActivity implements OnMapReadyCallback {
+import uqac.dim.elpy.R;
+
+public class FPingMap extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap map;
-    private FrameLayout mapLayout;
-
     private Marker actualMarker;
-
     private boolean isPinging = false;
-
     private Map<Marker, MarkerInfo> markerMap;
 
-    FusedLocationProviderClient fusedLocationProviderClient;
-
-    Location lastKnownLocation;
-
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private Location lastKnownLocation;
     private LatLng defaultLocation;
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_ping_map, container, false);
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ping_map);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         markerMap = new HashMap<>();
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        Context context = view.getContext();
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
         defaultLocation = new LatLng(48.419008, -71.052621);
-        mapLayout = (FrameLayout) findViewById(R.id.map);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
-        FloatingActionButton fab = findViewById(R.id.add_marker);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        }
+
+        FloatingActionButton fab = view.findViewById(R.id.add_marker);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isPinging = true;
             }
         });
-
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
-
         updateLocationUI();
-
         getDeviceLocation();
-
-        map.moveCamera(CameraUpdateFactory
-                .newLatLngZoom(defaultLocation, 12));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12));
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
                 if (isPinging) {
                     Marker marker = map.addMarker(new MarkerOptions().position(latLng));
                     afficheInfo(marker);
-
                     isPinging = false;
                 }
             }
@@ -131,10 +136,10 @@ public class PingMapActivity extends FragmentActivity implements OnMapReadyCallb
                 return infoWindow;
             }
         });
-    }
 
+    }
     public void afficheInfo(Marker marker) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(PingMapActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Info");
 
         View tmpLayout = getLayoutInflater().inflate(R.layout.activity_write_marker, null);
@@ -165,7 +170,7 @@ public class PingMapActivity extends FragmentActivity implements OnMapReadyCallb
             return;
         }
         try {
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
@@ -180,9 +185,9 @@ public class PingMapActivity extends FragmentActivity implements OnMapReadyCallb
 
     private void getDeviceLocation() {
         try {
-            if (ContextCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, task -> {
+                locationResult.addOnCompleteListener((Executor) this, task -> {
                     if (task.isSuccessful()) {
                         lastKnownLocation = task.getResult();
                         if (lastKnownLocation != null) {
