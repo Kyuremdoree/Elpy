@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prise_note_title">Take Notes</string>
+    <string name="menu_open">Open</string>
+    <string name="menu_close">Close</string>
+    <string name="pin_unpin">Pin/Unpin</string>
+    <string name="note_delete">Delete</string>
+    <string name="note_title">Title</string>
+    <string name="note_default_content">Write the content of the note.</string>
+    <string name="note_pinned">Note pinned</string>
+    <string name="note_unpinned">Note unpinned</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="note_title_required">Title required</string>
+    <string name="note_content_required">Content required</string>
+    <string name="note_date">Date</string>
+    <string name="note_notes">Notes.</string>
+</resources>
