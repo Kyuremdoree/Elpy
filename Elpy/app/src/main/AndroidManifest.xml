@@ -16,23 +16,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Elpy"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_NOTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".PingMapActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NoteSystem"
+            android:exported="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true">
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCv4ValmWRfmwek2DhGpcfreE0hO79JKts"/>
+
+        <activity
+            android:name=".NoteTaker"
+            android:exported="false"
+            android:theme="@style/Base.Theme.Elpy.NoActionBar"/>
     </application>
 
 </manifest>
