@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // il faudra faire l'imbrication des if pour rediriger sur la page cliquée
         if (itemId == R.id.fAudioConvertisseur)
         {
-            //TODO
+            Intent intent = new Intent(this, ConvertAudio.class);
+            startActivity(intent);
             return false;
         }
 
