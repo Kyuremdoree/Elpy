@@ -21,4 +21,5 @@
     <string name="hintSelect">Select country</string>
     <string name="amount">Amount to convert</string>
     <string name="amountConverted">Amount converted</string>
+    <string name="convert">Convert</string>
 </resources>

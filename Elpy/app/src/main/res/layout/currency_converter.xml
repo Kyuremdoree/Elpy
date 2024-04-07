@@ -78,8 +78,7 @@
                         android:textColor="#000000"
                         android:text=""
                         android:textSize="10dp"
-                        app:drawableLeftCompact="@drawable/arrow_down"
-                        app:drawableRightCompact="@drawable/arrow_down"/>
+                        android:drawableRight="@drawable/arrow_down"/>
 
                     <TextView
                         android:id="@+id/convert_to_dropdown_menu"
@@ -91,8 +90,7 @@
                         android:textColor="#000000"
                         android:text=""
                         android:textSize="10dp"
-                        app:drawableLeftCompact="@drawable/arrow_down"
-                        app:drawableRightCompact="@drawable/arrow_down"/>
+                        android:drawableRight="@drawable/arrow_down"/>
 
                 </LinearLayout>
                 
@@ -127,6 +125,7 @@
                         android:id="@+id/amount_value_converted"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:layout_weight="1.0"
                         android:text="@string/amountConverted"
                         android:textColor="#000000"/>
@@ -134,7 +133,58 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linear_layout_below2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edit_text_value_to_convert"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="#000000"
+                        android:textSize="14sp"/>
+                    
+                    <TextView
+                        android:id="@+id/conversion_rate_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:textSize="18sp"/>
+
+                    
+
+                </LinearLayout>
+
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingTop="20sp">
+                
+                <Button
+                    android:id="@+id/conversion_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:text="@string/convert"
+                    android:textColor="#000000"/>
+
+                
+            </RelativeLayout>
 
 
         </LinearLayout>

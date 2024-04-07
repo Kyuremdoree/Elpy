@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment newFragment = null;
 
         if (itemId == R.id.fConvertisseur) {
-            // Démarrer le convertisseur
+            Intent intent = new Intent(MainActivity.this, ConvertChange.class);
+            startActivity(intent);
         }
         else if (itemId == R.id.fPriseNote) {
             newFragment = new NoteSystem();
