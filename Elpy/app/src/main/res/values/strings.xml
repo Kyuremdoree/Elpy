@@ -20,4 +20,11 @@
     <string name="note_content_required">Contenu obligatoire</string>
     <string name="note_date">Date</string>
     <string name="note_notes">Notes.</string>
+    <string name="selectCountry">Choisir un pays</string>
+    <string name="search">Chercher..</string>
+    <string name="convertFrom">Convertir de</string>
+    <string name="convertTo">Convertir en</string>
+    <string name="hintSelect">Sélectionner pays</string>
+    <string name="amount">Montant à convertir</string>
+    <string name="amountConverted">Montant converti</string>
 </resources>

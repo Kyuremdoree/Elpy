@@ -14,4 +14,11 @@
     <string name="note_content_required">Content required</string>
     <string name="note_date">Date</string>
     <string name="note_notes">Notes.</string>
+    <string name="selectCountry">Select country</string>
+    <string name="search">Search..</string>
+    <string name="convertFrom">Convert from</string>
+    <string name="convertTo">Convert to</string>
+    <string name="hintSelect">Select country</string>
+    <string name="amount">Amount to convert</string>
+    <string name="amountConverted">Amount converted</string>
 </resources>
