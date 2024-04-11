@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .addToBackStack(null)
                     .commit();
         }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
     @Override
