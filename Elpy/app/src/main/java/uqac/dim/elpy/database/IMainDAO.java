@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import uqac.dim.elpy.models.Chrono;
 import uqac.dim.elpy.models.Note;
 
 @Dao
@@ -24,4 +25,9 @@ public interface IMainDAO {
     void toggleNotePin(int id, boolean isPinned);
     @Delete
     void deleteNote(Note note);
+
+    @Query("SELECT * FROM CHRONO WHERE id = 5")
+    Chrono getChrono();
+    @Query("UPDATE CHRONO SET Pomodoro = :pomodoro, ShortBreak = :shortBreak, LongBreak = :longBreak WHERE id = 5")
+    void updateChrono(int id, long pomodoro, long shortBreak, long longBreak);
 }
