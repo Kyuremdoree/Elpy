@@ -29,5 +29,5 @@ public interface IMainDAO {
     @Query("SELECT * FROM CHRONO WHERE id = 5")
     Chrono getChrono();
     @Query("UPDATE CHRONO SET Pomodoro = :pomodoro, ShortBreak = :shortBreak, LongBreak = :longBreak WHERE id = 5")
-    void updateChrono(int id, long pomodoro, long shortBreak, long longBreak);
+    void updateChrono(long pomodoro, long shortBreak, long longBreak);
 }

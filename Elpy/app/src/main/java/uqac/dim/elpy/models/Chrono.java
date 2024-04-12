@@ -4,21 +4,29 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "NOTE")
+@Entity(tableName = "CHRONO")
 public class Chrono {
     @PrimaryKey
-    private final int id = 5;
+    private int id = 5;
     @ColumnInfo(name = "Pomodoro")
-    private long pomodoro = 0;
+    private long pomodoro;
     @ColumnInfo(name = "ShortBreak")
-    private long shortBreak = 0;
+    private long shortBreak;
     @ColumnInfo(name = "LongBreak")
-    private long longBreak = 0;
+    private long longBreak;
 
     public Chrono(long pomodoro, long shortBreak, long longBreak) {
         this.pomodoro = pomodoro;
         this.shortBreak = shortBreak;
         this.longBreak = longBreak;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public long getPomodoro() {

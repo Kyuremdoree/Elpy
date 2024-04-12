@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             newFragment = new FPingMap();
         }
         else if (itemId == R.id.fChrono) {
-            // Démarrer le chronomètre
+            newFragment = new FocusTimer();
         }
         else if (itemId == R.id.fAudioConvertisseur) {
             // Démarrer le convertisseur audio
