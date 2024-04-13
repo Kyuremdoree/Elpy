@@ -9,13 +9,13 @@ public class Chrono {
     @PrimaryKey
     private int id = 5;
     @ColumnInfo(name = "Pomodoro")
-    private long pomodoro;
+    private Timer pomodoro;
     @ColumnInfo(name = "ShortBreak")
-    private long shortBreak;
+    private Timer shortBreak;
     @ColumnInfo(name = "LongBreak")
-    private long longBreak;
+    private Timer longBreak;
 
-    public Chrono(long pomodoro, long shortBreak, long longBreak) {
+    public Chrono(Timer pomodoro, Timer shortBreak, Timer longBreak) {
         this.pomodoro = pomodoro;
         this.shortBreak = shortBreak;
         this.longBreak = longBreak;
@@ -29,27 +29,27 @@ public class Chrono {
         this.id = id;
     }
 
-    public long getPomodoro() {
+    public Timer getPomodoro() {
         return pomodoro;
     }
 
-    public long getShortBreak() {
-        return shortBreak;
-    }
-
-    public long getLongBreak() {
-        return longBreak;
-    }
-
-    public void setPomodoro(long pomodoro) {
+    public void setPomodoro(Timer pomodoro) {
         this.pomodoro = pomodoro;
     }
 
-    public void setShortBreak(long shortBreak) {
+    public Timer getShortBreak() {
+        return shortBreak;
+    }
+
+    public void setShortBreak(Timer shortBreak) {
         this.shortBreak = shortBreak;
     }
 
-    public void setLongBreak(long longBreak) {
+    public Timer getLongBreak() {
+        return longBreak;
+    }
+
+    public void setLongBreak(Timer longBreak) {
         this.longBreak = longBreak;
     }
 }

@@ -77,4 +77,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
+
+    public void setDrawerEnabled(boolean state) {
+        drawerLayout.setEnabled(state);
+        drawerLayout.setDrawerLockMode(state ? DrawerLayout.LOCK_MODE_UNLOCKED : DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
 }
