@@ -1,5 +1,7 @@
 package uqac.dim.elpy;
 
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,7 @@ public class FocusTimer extends Fragment implements ITimeDurationPickerListener,
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_focus_timer, container, false);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         time_text = view.findViewById(R.id.time_text);
         pomodoro_selector = view.findViewById(R.id.pomodoro_selector);
@@ -132,10 +135,16 @@ public class FocusTimer extends Fragment implements ITimeDurationPickerListener,
         return view;
     }
 
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
         timerService.setListener(null);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     private void openPicker(Timer selectedTimer) {
@@ -183,7 +192,7 @@ public class FocusTimer extends Fragment implements ITimeDurationPickerListener,
         long_break_button.setEnabled(state);
         play_button.setEnabled(state);
         pause_button.setEnabled(!state);
-        reset_button.setEnabled(state);
+        reset_button.setEnabled(false);
     }
 
     @Override
