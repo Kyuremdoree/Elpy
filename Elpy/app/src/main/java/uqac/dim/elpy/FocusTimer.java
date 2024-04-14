@@ -1,18 +1,12 @@
 package uqac.dim.elpy;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.SystemClock;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -20,34 +14,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import uqac.dim.elpy.components.ITimeDurationPickerListener;
-import uqac.dim.elpy.components.TimeDurationPicker;
-import uqac.dim.elpy.database.RoomDB;
-import uqac.dim.elpy.models.Chrono;
+import service.ITimerServiceListener;
+import service.TimerService;
+import uqac.dim.elpy.component.ITimeDurationPickerListener;
+import uqac.dim.elpy.component.TimeDurationPicker;
+import uqac.dim.elpy.enums.TimerState;
+import uqac.dim.elpy.enums.TimerType;
 import uqac.dim.elpy.models.Timer;
 
-public class FocusTimer extends Fragment implements ITimeDurationPickerListener {
-    private final static long DEFAULT_POMODORO = 1500000;
-    private final static long DEFAULT_SHORT_BREAK = 300000;
-    private final static long DEFAULT_LONG_BREAK = 900000;
-    private final static long TIMER_INTERVAL = 1000;
-
-    private MainActivity mainActivity;
-    private RoomDB database;
-    private Chrono chrono;
-    private Button currentButton;
-    private CountDownTimer countDownTimer;
-    private Timer selectedTimer;
-    private long remainingMillis;
+public class FocusTimer extends Fragment implements ITimeDurationPickerListener, ITimerServiceListener {
+    private TimerService timerService;
 
     private TextView time_text;
     private RadioGroup pomodoro_selector;
-    private Button pomodoro_button;
-    private Button short_break_button;
-    private Button long_break_button;
+    private RadioButton pomodoro_button;
+    private RadioButton short_break_button;
+    private RadioButton long_break_button;
+
     private Button pomodoro_picker;
     private Button short_break_picker;
     private Button long_break_picker;
+    private Button selectedPicker;
+
     private ImageView play_button;
     private ImageView pause_button;
     private ImageView reset_button;
@@ -56,17 +44,6 @@ public class FocusTimer extends Fragment implements ITimeDurationPickerListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_focus_timer, container, false);
-        database = RoomDB.getInstance(getContext());
-        chrono = database.mainDAO().getChrono();
-
-        if (chrono == null) {
-            chrono = new Chrono(
-                    new Timer(DEFAULT_POMODORO),
-                    new Timer(DEFAULT_SHORT_BREAK),
-                    new Timer(DEFAULT_LONG_BREAK)
-            );
-            updateDB();
-        }
 
         time_text = view.findViewById(R.id.time_text);
         pomodoro_selector = view.findViewById(R.id.pomodoro_selector);
@@ -80,88 +57,120 @@ public class FocusTimer extends Fragment implements ITimeDurationPickerListener 
         pause_button = view.findViewById(R.id.pause_button);
         reset_button = view.findViewById(R.id.reset_button);
 
-        pomodoro_picker.setText(chrono.getPomodoro().toString());
-        short_break_picker.setText(chrono.getShortBreak().toString());
-        long_break_picker.setText(chrono.getLongBreak().toString());
+        timerService = TimerService.getInstance();
+        timerService.setListener(this);
+        if (timerService.getTimerState() == TimerState.STARTED) {
+            setEnables(false);
+            time_text.setText(Timer.longToTimer(timerService.getCurrentMillis()).toString());
+        }
+        else if (timerService.getTimerState() == TimerState.PAUSED) {
+            setEnables(false);
+            play_button.setEnabled(true);
+            reset_button.setEnabled(true);
+            time_text.setText(Timer.longToTimer(timerService.getCurrentMillis()).toString());
+        }
+        else if (timerService.getTimerState() == TimerState.STOPPPED) {
+            setEnables(true);
+        }
+
+        pomodoro_picker.setText(timerService.getChrono().getPomodoro().toString());
+        short_break_picker.setText(timerService.getChrono().getShortBreak().toString());
+        long_break_picker.setText(timerService.getChrono().getLongBreak().toString());
 
         pomodoro_picker.setOnClickListener(v -> {
-            openPicker(pomodoro_picker);
+            selectedPicker = pomodoro_picker;
+            openPicker(timerService.getChrono().getPomodoro());
         });
         short_break_picker.setOnClickListener(v -> {
-            openPicker(short_break_picker);
+            selectedPicker = short_break_picker;
+            openPicker(timerService.getChrono().getShortBreak());
         });
         long_break_picker.setOnClickListener(v -> {
-            openPicker(long_break_picker);
+            selectedPicker = long_break_picker;
+            openPicker(timerService.getChrono().getLongBreak());
         });
 
         pomodoro_selector.setOnCheckedChangeListener((group, checkedId) -> {
-            if(checkedId == R.id.pomodoro_button) {
-                selectedTimer = chrono.getPomodoro();
+            if (checkedId == R.id.pomodoro_button) {
+                timerService.setTimerType(TimerType.POMODORO);
+                time_text.setText(timerService.getChrono().getPomodoro().toString());
             }
             else if (checkedId == R.id.short_break_button) {
-                selectedTimer = chrono.getShortBreak();
+                timerService.setTimerType(TimerType.SHORT_BREAK);
+                time_text.setText(timerService.getChrono().getShortBreak().toString());
             }
             else if (checkedId == R.id.long_break_button) {
-                selectedTimer = chrono.getLongBreak();
+                timerService.setTimerType(TimerType.LONG_BREAK);
+                time_text.setText(timerService.getChrono().getLongBreak().toString());
             }
-
-            time_text.setText(selectedTimer.toString());
         });
 
         play_button.setOnClickListener(v -> {
-            startTimer(remainingMillis == 0 ? selectedTimer.toMillis() : remainingMillis);
+            timerService.start();
             setEnables(false);
         });
         pause_button.setOnClickListener(v -> {
-            pauseTimer();
+            timerService.pause();
+            play_button.setEnabled(true);
+            reset_button.setEnabled(true);
         });
         reset_button.setOnClickListener(v -> {
-            endTimer();
+            timerService.stop();
             setEnables(true);
         });
 
-        pause_button.setEnabled(false);
-        reset_button.setEnabled(false);
-        pomodoro_selector.check(R.id.pomodoro_button);
+        if (timerService.getTimerType() == TimerType.POMODORO) {
+            pomodoro_button.setChecked(true);
+        }
+        else if (timerService.getTimerType() == TimerType.SHORT_BREAK) {
+            short_break_button.setChecked(true);
+        }
+        else if (timerService.getTimerType() == TimerType.LONG_BREAK) {
+            long_break_button.setChecked(true);
+        }
 
         return view;
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof MainActivity) {
-            mainActivity = (MainActivity) context;
+    public void onDetach() {
+        super.onDetach();
+        timerService.setListener(null);
+    }
+
+    private void openPicker(Timer selectedTimer) {
+        new TimeDurationPicker(getContext(), selectedTimer, this).show();
+    }
+
+    @Override
+    public void onTimeDurationPickerOk(Timer timer) {
+        selectedPicker.setText(timer.toString());
+
+        if (selectedPicker == pomodoro_picker) {
+            timerService.getChrono().setPomodoro(timer);
+            if (timerService.getTimerType() == TimerType.POMODORO) {
+                time_text.setText(timer.toString());
+            }
         }
-    }
-
-    private void startTimer(long millis) {
-        countDownTimer = new CountDownTimer(millis, TIMER_INTERVAL) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                time_text.setText(Timer.longToTimer(millisUntilFinished).toString());
-                remainingMillis = millisUntilFinished;
+        else if (selectedPicker == short_break_picker) {
+            timerService.getChrono().setShortBreak(timer);
+            if (timerService.getTimerType() == TimerType.SHORT_BREAK) {
+                time_text.setText(timer.toString());
             }
-
-            @Override
-            public void onFinish() {
-                endTimer();
+        }
+        else if (selectedPicker == long_break_picker){
+            timerService.getChrono().setLongBreak(timer);
+            if (timerService.getTimerType() == TimerType.LONG_BREAK) {
+                time_text.setText(timer.toString());
             }
-        }.start();
+        }
+        selectedPicker = null;
+        timerService.UpdateDB();
     }
 
-    private void pauseTimer() {
-        countDownTimer.cancel();
-        play_button.setEnabled(true);
-        pause_button.setEnabled(false);
-        reset_button.setEnabled(true);
-    }
-
-    private void endTimer() {
-        countDownTimer.cancel();
-        setEnables(true);
-        time_text.setText(selectedTimer.toString());
-        remainingMillis = 0;
+    @Override
+    public void onTimeDurationPickerCancel() {
+        selectedPicker = null;
     }
 
     private void setEnables(boolean state) {
@@ -175,38 +184,16 @@ public class FocusTimer extends Fragment implements ITimeDurationPickerListener 
         play_button.setEnabled(state);
         pause_button.setEnabled(!state);
         reset_button.setEnabled(state);
-        mainActivity.setDrawerEnabled(state);
-    }
-
-    private void updateDB() {
-        database.mainDAO().insertChrono(chrono);
-    }
-
-    private void openPicker(Button button) {
-        currentButton = button;
-        TimeDurationPicker picker = new TimeDurationPicker(getContext());
-        picker.setTimeDurationPickerListener(this);
-        picker.show();
     }
 
     @Override
-    public void onTimePicked(int hour, int minute, int second) {
-        currentButton.setText(hour+":"+minute+":"+second);
-
-        if (currentButton == pomodoro_picker) {
-            chrono.setPomodoro(new Timer(hour, minute, second));
-        }
-        else if (currentButton == short_break_picker) {
-            chrono.setShortBreak(new Timer(hour, minute, second));
-        }
-        else {
-            chrono.setLongBreak(new Timer(hour, minute, second));
-        }
-        updateDB();
+    public void onTimerServiceTick(long currentMillis) {
+        time_text.setText(Timer.longToTimer(currentMillis).toString());
     }
 
     @Override
-    public void onCancel() {
-        currentButton = null;
+    public void onTimerServiceFinish(long startMillis) {
+        time_text.setText(Timer.longToTimer(startMillis).toString());
+        setEnables(true);
     }
 }
