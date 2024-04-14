@@ -145,7 +145,7 @@ public class PingMapActivity extends FragmentActivity implements OnMapReadyCallb
                 EditText nameEditText = tmpLayout.findViewById(R.id.name);
                 EditText commentEditText = tmpLayout.findViewById(R.id.comment);
 
-                MarkerInfo info = new MarkerInfo(nameEditText.getText().toString(), commentEditText.getText().toString());
+                MarkerInfo info = new MarkerInfo(nameEditText.getText().toString(), commentEditText.getText().toString(), marker);
                 markerMap.put(marker, info);
                 marker.showInfoWindow();
             }
