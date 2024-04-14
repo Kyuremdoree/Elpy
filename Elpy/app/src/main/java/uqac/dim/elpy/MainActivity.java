@@ -14,6 +14,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import uqac.dim.elpy.fragment.FPingMap;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             newFragment = new NoteSystem();
         }
         else if (itemId == R.id.fPingMap) {
-            // Démarrer la carte de ping
+            newFragment = new FPingMap();
         }
         else if (itemId == R.id.fChrono) {
             // Démarrer le chronomètre
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .addToBackStack(null)
                     .commit();
         }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
     @Override

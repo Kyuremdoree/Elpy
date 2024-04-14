@@ -34,6 +34,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("androidx.room:room-common:2.6.1")
     implementation ("com.github.yukuku:ambilwarna:2.0.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
@@ -43,3 +44,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.android.volley:volley:1.2.1")
 }
+
+
+
