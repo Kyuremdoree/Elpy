@@ -17,7 +17,7 @@
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="15dp"
-        android:backgroundTint="#FFFFFF">
+        style="@style/Theme.BackgroundCurrencyConverter">
 
         <LinearLayout
             android:id="@+id/master_linear_layout"
@@ -50,7 +50,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_weight="1.0"
                         android:text="@string/convertFrom"
-                        android:textColor="#000000"/>
+                        style="@style/Theme.TextColorCurrencyConverter"/>
 
                     <TextView
                         android:id="@+id/convert_to_title"
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:text="@string/convertTo"
-                        android:textColor="#000000"/>
+                        style="@style/Theme.TextColorCurrencyConverter"/>
 
 
                 </LinearLayout>
@@ -120,7 +120,7 @@
                         android:layout_weight="1.0"
                         android:layout_marginStart="10dp"
                         android:text="@string/amount"
-                        android:textColor="#000000"/>
+                        style="@style/Theme.TextColorCurrencyConverter"/>
 
                     <TextView
                         android:id="@+id/amount_value_converted"
@@ -129,7 +129,7 @@
                         android:gravity="center"
                         android:layout_weight="1.0"
                         android:text="@string/amountConverted"
-                        android:textColor="#000000"/>
+                        style="@style/Theme.TextColorCurrencyConverter"/>
 
 
                 </LinearLayout>
@@ -150,7 +150,7 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="#000000"
+                        style="@style/Theme.TextColorCurrencyConverter"
                         android:textSize="14sp"/>
                     
                     <TextView
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
                         android:gravity="center"
-                        android:textColor="#000000"
+                        style="@style/Theme.TextColorCurrencyConverter"
                         android:textSize="18sp"/>
 
                     

@@ -12,10 +12,8 @@ public class ConvertChange extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.currency_converter_main);
 
-        // Crée une instance de votre fragment
         ConvertChangeFragment convertChangeFragment = new ConvertChangeFragment();
 
-        // Ajoute le fragment au conteneur
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_currency_converter_container, convertChangeFragment);
