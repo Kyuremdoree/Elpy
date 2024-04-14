@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -150,7 +152,7 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
                 EditText nameEditText = tmpLayout.findViewById(R.id.name);
                 EditText commentEditText = tmpLayout.findViewById(R.id.comment);
 
-                MarkerInfo info = new MarkerInfo(nameEditText.getText().toString(), commentEditText.getText().toString());
+                MarkerInfo info = new MarkerInfo(nameEditText.getText().toString(), commentEditText.getText().toString(), marker);
                 markerMap.put(marker, info);
                 marker.showInfoWindow();
             }
@@ -212,5 +214,34 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
             Log.e("PingMap","Exception: %s" + e.getMessage());
         }
 
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (markerMap != null && !markerMap.isEmpty()) {
+            ArrayList<Parcelable> markerInfoList = new ArrayList<>();
+            for (Map.Entry<Marker, MarkerInfo> entry : markerMap.entrySet()) {
+                MarkerInfo markerInfo = entry.getValue();
+                markerInfoList.add(markerInfo);
+            }
+            outState.putParcelableArrayList("markerInfoList", markerInfoList);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            ArrayList<Parcelable> markerInfoList = savedInstanceState.getParcelableArrayList("markerInfoList");
+            if (markerInfoList != null) {
+                for (Parcelable parcelable : markerInfoList) {
+                    if (parcelable instanceof MarkerInfo) {
+                        MarkerInfo markerInfo = (MarkerInfo) parcelable;
+                        markerMap.put(markerInfo.getMarker(), markerInfo);
+                    }
+                }
+
+            }
+        }
     }
 }
