@@ -173,7 +173,7 @@ public class ConvertChange extends AppCompatActivity {
     public String getConversionRate(String convertFrom, String convertTo, Double amountToConvert)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://free.currconv.com/api/v7/convert7?q="+convertFrom+"_"+convertTo+"&compact=ultra&apiKey=22e91ab924e2aa6f9a4";
+        String url = "https://free.currconv.com/api/v7/convert?q="+convertFrom+"_"+convertTo+"&compact=ultra&apiKey=89b9e1e812be9d8ee328";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
