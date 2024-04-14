@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,11 +59,14 @@ public class ConvertChangeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.currency_converter, container, false);
 
+
         convertFromDropdown = view.findViewById(R.id.convert_from_dropdown_menu);
         convertToDropdown = view.findViewById(R.id.convert_to_dropdown_menu);
         convertedValue = view.findViewById(R.id.conversion_rate_text);
         amountToConvert = view.findViewById(R.id.edit_text_value_to_convert);
         convertButton = view.findViewById(R.id.conversion_button);
+
+
 
         arrayList = new ArrayList<>();
         for (String country : countries)
@@ -76,7 +80,7 @@ public class ConvertChangeFragment extends Fragment {
             {
                 fromDialog = new Dialog(requireContext());
                 fromDialog.setContentView(R.layout.from_spinner);
-                fromDialog.getWindow().setLayout(650,800);
+                fromDialog.getWindow().setLayout(700,850);
                 fromDialog.show();
 
                 EditText editText = fromDialog.findViewById(R.id.edit_text);

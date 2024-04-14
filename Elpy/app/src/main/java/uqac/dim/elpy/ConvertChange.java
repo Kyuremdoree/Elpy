@@ -21,4 +21,5 @@ public class ConvertChange extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_currency_converter_container, convertChangeFragment);
         fragmentTransaction.commit();
     }
+
 }
