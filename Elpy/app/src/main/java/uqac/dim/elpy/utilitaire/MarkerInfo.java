@@ -77,4 +77,13 @@ public class MarkerInfo implements Parcelable {
     public Marker getMarker() {
         return marker;
     }
+
+    public MarkerEntity toMarkerEntity() {
+        MarkerEntity entity = new MarkerEntity();
+        entity.latitude = marker.getPosition().latitude;
+        entity.longitude = marker.getPosition().longitude;
+        entity.name = nom;
+        entity.comment = description;
+        return entity;
+    }
 }

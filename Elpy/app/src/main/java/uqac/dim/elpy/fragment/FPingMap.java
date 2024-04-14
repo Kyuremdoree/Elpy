@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,10 +46,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
 import uqac.dim.elpy.PingMapActivity;
+import uqac.dim.elpy.database.RoomDB;
+import uqac.dim.elpy.utilitaire.MarkerEntity;
 import uqac.dim.elpy.utilitaire.MarkerInfo;
 
 import uqac.dim.elpy.R;
@@ -62,6 +68,8 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
     private Location lastKnownLocation;
     private LatLng defaultLocation;
 
+    private RoomDB database;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +79,8 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        database = RoomDB.getInstance(getContext());
+        //retrieveMarkersFromDatabase();
         markerMap = new HashMap<>();
         Context context = view.getContext();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
@@ -140,6 +150,7 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
         });
 
     }
+
     public void afficheInfo(Marker marker) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Info");
@@ -155,6 +166,8 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
                 MarkerInfo info = new MarkerInfo(nameEditText.getText().toString(), commentEditText.getText().toString(), marker);
                 markerMap.put(marker, info);
                 marker.showInfoWindow();
+
+                //insertMarkerIntoDatabase(info);
             }
         });
         builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
@@ -196,8 +209,7 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(lastKnownLocation.getLatitude(),
                                             lastKnownLocation.getLongitude()), 12));
-                        }
-                        else {
+                        } else {
                             map.moveCamera(CameraUpdateFactory
                                     .newLatLngZoom(defaultLocation, 12));
                         }
@@ -211,10 +223,11 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
                 });
             }
         } catch (SecurityException e) {
-            Log.e("PingMap","Exception: %s" + e.getMessage());
+            Log.e("PingMap", "Exception: %s" + e.getMessage());
         }
 
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -223,6 +236,7 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
             for (Map.Entry<Marker, MarkerInfo> entry : markerMap.entrySet()) {
                 MarkerInfo markerInfo = entry.getValue();
                 markerInfoList.add(markerInfo);
+
             }
             outState.putParcelableArrayList("markerInfoList", markerInfoList);
         }
@@ -244,4 +258,67 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
             }
         }
     }
+
+    /*private void insertMarkerIntoDatabase(MarkerInfo markerInfo) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                database.mainDAO().insertMarker(markerInfo.toMarkerEntity());
+            }
+        }).start();
+    }
+
+    private void retrieveMarkersFromDatabase() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<MarkerEntity> markerEntities = database.mainDAO().getAllMarkers();
+
+                for (MarkerEntity markerEntity : markerEntities) {
+                    MarkerInfo markerInfo = convertToMarkerInfo(markerEntity);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            markerMap.put(markerInfo.getMarker(), markerInfo);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    private MarkerInfo convertToMarkerInfo(MarkerEntity markerEntity) {
+        LatLng position = new LatLng(markerEntity.latitude, markerEntity.longitude);
+        MarkerOptions markerOptions = new MarkerOptions().position(position).title(markerEntity.name).snippet(markerEntity.comment);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Marker marker = map.addMarker(markerOptions);
+                markerMap.put(marker, markerInfo);
+            }
+        });
+
+        return new MarkerInfo(markerEntity.name, markerEntity.comment, marker);
+    }
+
+    private void runOnUiThread(Runnable action) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(action);
+    }
+
+
+    private void refreshMap() {
+        if (map == null) return;
+        map.clear();
+        for (MarkerInfo markerInfo : markerMap.values()) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(markerInfo.getMarker().getPosition())
+                    .title(markerInfo.getNom())
+                    .snippet(markerInfo.getDescription());
+            Marker marker = map.addMarker(markerOptions);
+        }
+    }*/
+
+
 }
