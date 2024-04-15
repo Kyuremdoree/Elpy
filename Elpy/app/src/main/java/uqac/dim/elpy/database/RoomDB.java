@@ -7,8 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import uqac.dim.elpy.models.Note;
+import uqac.dim.elpy.utilitaire.MarkerEntity;
 
-@Database(entities = Note.class, version = 1, exportSchema = false)
+@Database(entities = {Note.class, MarkerEntity.class}, version = 2, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase {
     private static RoomDB database;
     private static final String DATABASE_NAME = "Elpy";

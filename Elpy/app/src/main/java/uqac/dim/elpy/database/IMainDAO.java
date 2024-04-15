@@ -9,6 +9,7 @@ import androidx.room.Query;
 import java.util.List;
 
 import uqac.dim.elpy.models.Note;
+import uqac.dim.elpy.utilitaire.MarkerEntity;
 
 @Dao
 public interface IMainDAO {
@@ -24,4 +25,9 @@ public interface IMainDAO {
     void toggleNotePin(int id, boolean isPinned);
     @Delete
     void deleteNote(Note note);
+    @Insert
+    void insertMarker(MarkerEntity marker);
+    @Query("SELECT * FROM markers")
+    List<MarkerEntity> getAllMarkers();
+
 }
