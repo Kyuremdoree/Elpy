@@ -14,7 +14,7 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
         android:background="@color/silver"
-        app:queryHint="Chercher une note..." />
+        app:queryHint="@string/note_search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/note_home_container"

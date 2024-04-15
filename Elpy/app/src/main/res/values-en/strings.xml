@@ -22,4 +22,5 @@
     <string name="note_content_required">Content required</string>
     <string name="note_date">Date</string>
     <string name="note_notes">Notes.</string>
+    <string name="note_search">Search a note...</string>
 </resources>
