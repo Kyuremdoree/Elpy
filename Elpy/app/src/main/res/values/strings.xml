@@ -1,14 +1,37 @@
 <resources>
-    <string name="app_name">Elpy</string>
+    <string name="app_name" translatable="false">Elpy</string>
     <string name="convertisseur_title">Convertisseur</string>
-    <string name="prise_note_title">Prise Note</string>
+    <string name="prise_note_title">Prise Notes</string>
     <string name="ping_map_title">Ping Map</string>
     <string name="chrono_title">Chrono</string>
     <string name="convertisseur_audio">Convertisseur Audio</string>
     <string name="menu_open">Ouvert</string>
     <string name="menu_close">Fermer</string>
+    <string name="add_marker">+</string>
+    <string name="text_description">Description :</string>
+    <string name="text_nom">Nom :</string>
+    <string name="supprimer_button">Supprimer</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="putURL">Entrez l\'URL</string>
+    <string name="pin_unpin">Épingler/Désépingler</string>
+    <string name="note_delete">Supprimer</string>
+    <string name="note_title">Titre</string>
+    <string name="note_default_content">Écrivez le contenu de la note.</string>
+    <string name="note_pinned">Note épinglée</string>
+    <string name="note_unpinned">Note désépinglée</string>
+    <string name="note_deleted">Note supprimée</string>
+    <string name="note_title_required">Titre obligatoire</string>
+    <string name="note_content_required">Contenu obligatoire</string>
+    <string name="note_date">Date</string>
+    <string name="note_notes">Notes.</string>
+    <string name="selectCountry">Choisir un pays</string>
+    <string name="search">Chercher..</string>
+    <string name="convertFrom">Convertir de</string>
+    <string name="convertTo">Convertir en</string>
+    <string name="hintSelect">Sélectionner pays</string>
+    <string name="amount">Montant à convertir</string>
+    <string name="amountConverted">Montant converti</string>
     <string name="convert">Convertir</string>
 </resources>

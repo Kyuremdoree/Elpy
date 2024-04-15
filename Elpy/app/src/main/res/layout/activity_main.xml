@@ -10,6 +10,7 @@
     android:theme="@style/Base.Theme.Elpy">
 
     <LinearLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -30,6 +31,7 @@
         android:layout_height="match_parent"
         android:id="@+id/navigatioin_drawer"
         android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/menu"
         />
 

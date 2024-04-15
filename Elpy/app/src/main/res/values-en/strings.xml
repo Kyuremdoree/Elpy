@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="convertisseur_title">Converter</string>
+    <string name="ping_map_title">Ping Map</string>
+    <string name="chrono_title">Timer</string>
+    <string name="convertisseur_audio">Audio Converter</string>
+    <string name="add_marker">+</string>
+    <string name="text_description">Description :</string>
+    <string name="text_nom">Name :</string>
+    <string name="supprimer_button">Delete</string>
+    <string name="prise_note_title">Take Notes</string>
+    <string name="menu_open">Open</string>
+    <string name="menu_close">Close</string>
+    <string name="pin_unpin">Pin/Unpin</string>
+    <string name="note_delete">Delete</string>
+    <string name="note_title">Title</string>
+    <string name="note_default_content">Write the content of the note.</string>
+    <string name="note_pinned">Note pinned</string>
+    <string name="note_unpinned">Note unpinned</string>
+    <string name="note_deleted">Note deleted</string>
+    <string name="note_title_required">Title required</string>
+    <string name="note_content_required">Content required</string>
+    <string name="note_date">Date</string>
+    <string name="note_notes">Notes.</string>
+    <string name="selectCountry">Select country</string>
+    <string name="search">Search..</string>
+    <string name="convertFrom">Convert from</string>
+    <string name="convertTo">Convert to</string>
+    <string name="hintSelect">Select country</string>
+    <string name="amount">Amount to convert</string>
+    <string name="amountConverted">Amount converted</string>
+    <string name="convert">Convert</string>
+</resources>
