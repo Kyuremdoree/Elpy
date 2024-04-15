@@ -22,5 +22,10 @@
     <string name="note_content_required">Content required</string>
     <string name="note_date">Date</string>
     <string name="note_notes">Notes.</string>
+    <string name="long_break">Long break</string>
+    <string name="timer_hours">Hours</string>
+    <string name="timer_short_break">Short break</string>
+    <string name="timer_seconds">Seconds</string>
+    <string name="timer_cancel">Cancel</string>
     <string name="note_search">Search a note...</string>
 </resources>

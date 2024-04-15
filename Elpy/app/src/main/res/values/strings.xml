@@ -23,5 +23,14 @@
     <string name="note_content_required">Contenu obligatoire</string>
     <string name="note_date">Date</string>
     <string name="note_notes">Notes.</string>
+    <string name="timer_hours">Heures</string>
+    <string name="timer_minutes" translatable="false">Minutes</string>
+    <string name="timer_seconds">Secondes</string>
+    <string name="timer_ok" translatable="false">Ok</string>
+    <string name="timer_cancel">Annuler</string>
+    <string name="timer_base" translatable="false">00:00:00</string>
+    <string name="timer_pomodoro" translatable="false">Pomodoro</string>
+    <string name="timer_short_break">Pause courte</string>
+    <string name="long_break">Pause longue</string>
     <string name="note_search">Chercher une note...</string>
 </resources>
