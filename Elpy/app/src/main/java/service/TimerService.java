@@ -170,7 +170,8 @@ public class TimerService extends Service {
                 .setSmallIcon(R.drawable.timer_notification_icon)
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
-                .setFullScreenIntent(pendingIntent, true);
+                .setFullScreenIntent(pendingIntent, true)
+                .setOnlyAlertOnce(true);
         try {
             nm.notify(NOTIFICATION_ID, builder.build());
         } catch (Exception e) {
