@@ -1,9 +1,15 @@
 package uqac.dim.elpy.fragment;
 
+import static android.Manifest.*;
+import static android.Manifest.permission.*;
+
+import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -80,6 +86,11 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermission();
+            }
+        }
         database = RoomDB.getInstance(getContext());
         //retrieveMarkersFromDatabase();
         markerMap = new HashMap<>();
@@ -100,6 +111,21 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
             }
         });
     }
+
+    private void requestPermission() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            explainAndRequest();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        }
+    }
+
+    private void explainAndRequest() {
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+    }
+
+
+
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -186,7 +212,7 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
             return;
         }
         try {
-            if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
@@ -201,7 +227,7 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
 
     private void getDeviceLocation() {
         try {
-            if (ContextCompat.checkSelfPermission(requireContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(requireContext().getApplicationContext(), ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -241,6 +267,8 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
             outState.putParcelableArrayList("markerInfoList", markerInfoList);
         }
     }
+
+
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
