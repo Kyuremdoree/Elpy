@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 import uqac.dim.elpy.PingMapActivity;
@@ -200,9 +201,9 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
 
     private void getDeviceLocation() {
         try {
-            if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(requireContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener((Executor) this, task -> {
+                locationResult.addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         lastKnownLocation = task.getResult();
                         if (lastKnownLocation != null) {
@@ -225,7 +226,6 @@ public class FPingMap extends Fragment implements OnMapReadyCallback {
         } catch (SecurityException e) {
             Log.e("PingMap", "Exception: %s" + e.getMessage());
         }
-
     }
 
     @Override
