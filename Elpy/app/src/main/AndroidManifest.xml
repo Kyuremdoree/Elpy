@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -37,16 +39,6 @@
         <activity
             android:name=".PingMapActivity"
             android:exported="true">
-        </activity>
-        <activity
-            android:name=".NoteSystem"
-            android:exported="true"
-            android:showWhenLocked="true"
-            android:turnScreenOn="true">
-            <intent-filter>
-                <action android:name="android.intent.action.CREATE_NOTE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"

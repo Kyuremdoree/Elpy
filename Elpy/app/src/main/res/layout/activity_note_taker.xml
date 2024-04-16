@@ -36,12 +36,12 @@
         android:layout_height="wrap_content"
         android:text="@string/note_title"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:singleLine="true"/>
     <EditText
         android:id="@+id/noteTaker_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/note_default_content"
-        android:textSize="17sp"/>
+        android:textSize="20sp"/>
 </LinearLayout>

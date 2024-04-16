@@ -9,23 +9,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import service.TimerService;
 import uqac.dim.elpy.fragment.FPingMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    private TimerService  timerService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        timerService = new TimerService(this);
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.Toolbar);
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             newFragment = new FPingMap();
         }
         else if (itemId == R.id.fChrono) {
-            // Démarrer le chronomètre
+            newFragment = new FocusTimer();
         }
         else if (itemId == R.id.fAudioConvertisseur) {
             newFragment = new ConvertAudioFragment();
@@ -79,5 +81,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else {
             super.onBackPressed();
         }
+    }
+
+    public void setDrawerEnabled(boolean state) {
+        drawerLayout.setEnabled(state);
+        drawerLayout.setDrawerLockMode(state ? DrawerLayout.LOCK_MODE_UNLOCKED : DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 }

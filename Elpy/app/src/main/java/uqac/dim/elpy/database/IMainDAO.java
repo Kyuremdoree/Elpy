@@ -8,7 +8,9 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import uqac.dim.elpy.models.Chrono;
 import uqac.dim.elpy.models.Note;
+import uqac.dim.elpy.models.Timer;
 import uqac.dim.elpy.utilitaire.MarkerEntity;
 
 @Dao
@@ -25,6 +27,11 @@ public interface IMainDAO {
     void toggleNotePin(int id, boolean isPinned);
     @Delete
     void deleteNote(Note note);
+
+    @Insert(onConflict = REPLACE)
+    void insertChrono(Chrono chrono);
+    @Query("SELECT * FROM CHRONO WHERE id = 5")
+    Chrono getChrono();
     @Insert
     void insertMarker(MarkerEntity marker);
     @Query("SELECT * FROM markers")

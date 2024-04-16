@@ -11,9 +11,7 @@
     <string name="text_description">Description :</string>
     <string name="text_nom">Nom :</string>
     <string name="supprimer_button">Supprimer</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="putURL">Entrez l\'URL</string>
     <string name="pin_unpin">Épingler/Désépingler</string>
     <string name="note_delete">Supprimer</string>
@@ -26,6 +24,16 @@
     <string name="note_content_required">Contenu obligatoire</string>
     <string name="note_date">Date</string>
     <string name="note_notes">Notes.</string>
+    <string name="timer_hours">Heures</string>
+    <string name="timer_minutes" translatable="false">Minutes</string>
+    <string name="timer_seconds">Secondes</string>
+    <string name="timer_ok" translatable="false">Ok</string>
+    <string name="timer_cancel">Annuler</string>
+    <string name="timer_base" translatable="false">00:00:00</string>
+    <string name="timer_pomodoro" translatable="false">Pomodoro</string>
+    <string name="timer_short_break">Pause courte</string>
+    <string name="long_break">Pause longue</string>
+    <string name="note_search">Chercher une note...</string>
     <string name="selectCountry">Choisir un pays</string>
     <string name="search">Chercher..</string>
     <string name="convertFrom">Convertir de</string>
